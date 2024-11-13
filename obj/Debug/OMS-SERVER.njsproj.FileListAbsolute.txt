@@ -1,3 +1,0 @@
-D:\AbinashPersonal\MyProjects\OMS-WE\OMS-WE\OMS-SERVER\obj\Debug\OMS-SERVER.njsproj.AssemblyReference.cache
-D:\AbinashPersonal\MyProjects\OMS-WE\OMS-WE\OMS-SERVER\obj\Debug\OMS-SERVER.njsproj.CoreCompileInputs.cache
-D:\AbinashPersonal\MyProjects\OMS-WE\OMS-WE\OMS-SERVER\bin\Microsoft.NodejsTools.WebRole.dll
