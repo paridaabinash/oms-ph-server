@@ -11,4 +11,7 @@ node_modules/
 
 # Ignore cache and temporary files
 .cache/
+.vs/
+obj/
+bin/
 
