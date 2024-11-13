@@ -1,3 +1,4 @@
+require('dotenv').config();
 const Master = require('../models/masterModel');
 const { db, dbName, username, password } = require('../config/db'); // CouchDB instance
 const axios = require('axios');
@@ -140,7 +141,7 @@ const controller = {
             imgid = docId.replaceAll('/', '%2F');
             const images = Object.keys(attachments).map((key) => ({
                 name: key,
-                url: `http://localhost:5984/${dbName}/${imgid}/${key}`, // Change dbName to your database name
+                url: `${process.env.COUCHDB_URL}/${dbName}/${imgid}/${key}`, // Change dbName to your database name
             }));
             const fetchedImages = await Promise.all(
                 images.map(async (image) => {
