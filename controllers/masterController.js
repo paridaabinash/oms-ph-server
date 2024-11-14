@@ -138,10 +138,11 @@ const controller = {
             const attachments = doc._attachments;
 
             // Get the URLs of the attachments
+            const couchdb_url = process.env.COUCHDB_URL || 'http://localhost:5984';
             imgid = docId.replaceAll('/', '%2F');
             const images = Object.keys(attachments).map((key) => ({
                 name: key,
-                url: `${process.env.COUCHDB_URL}/${dbName}/${imgid}/${key}`, // Change dbName to your database name
+                url: `${couchdb_url}/${dbName}/${imgid}/${key}`, // Change dbName to your database name
             }));
             const fetchedImages = await Promise.all(
                 images.map(async (image) => {
