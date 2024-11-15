@@ -11,8 +11,17 @@ const jwt = require('jsonwebtoken');
 const app = express();
 app.use(bodyParser.json({ limit: '10mb' })); 
 
+const allowedOrigins = [process.env.FRONTEND_URL];
 const corsOptions = {
-    origin: process.env.FRONTEND_URL, // Allow only your Angular frontend (change this to your Angular frontend's URL)
+    origin: (origin, callback) => {
+        // Allow requests with no origin (e.g., mobile apps or curl requests)
+        if (!origin) return callback(null, true);
+        if (allowedOrigins.includes(origin)) {
+            return callback(null, true);
+        } else {
+            return callback(new Error('Not allowed by CORS'));
+        }
+    },
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true, // Enable cookies if needed
 }
