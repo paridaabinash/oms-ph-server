@@ -11,17 +11,8 @@ const jwt = require('jsonwebtoken');
 const app = express();
 app.use(bodyParser.json({ limit: '10mb' })); 
 
-const allowedOrigins = [process.env.FRONTEND_URL];
 const corsOptions = {
-    origin: (origin, callback) => {
-        // Allow requests with no origin (e.g., mobile apps or curl requests)
-        if (!origin) return callback(null, true);
-        if (allowedOrigins.includes(origin)) {
-            return callback(null, true);
-        } else {
-            return callback(new Error('Not allowed by CORS'));
-        }
-    },
+    origin: '*', //http://oms-ph-client.netlify.app
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true, // Enable cookies if needed
 }
