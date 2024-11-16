@@ -64,14 +64,14 @@ const controller = {
         if (!user.doc.isAdmin) { // if not admin authorize connected ip
             const checkIPifNotAdmin = await checkIp(req, res, user.doc.isAdmin);
             if (!checkIPifNotAdmin)
-                return res.status(403).json({ message: 'Unauthorized: Access from this IP is not allowed' + error.message });
+                return res.status(403).json({ message: 'Unauthorized: Access from this IP is not allowed' });
         }
 
         if (passwordMatches) {
             const token = jwt.sign({ username: user.username }, JWT_SECRET, { expiresIn: '1h' });
             return res.status(200).json({ user: user.doc, message: 'Login successful!', token });
         } else {
-            return res.status(401).json({ error: 'Invalid username or password.' + error.message });
+            return res.status(401).json({ error: 'Invalid username or password.' });
         }
     },
     getAllUsers: async (req, res) => {
