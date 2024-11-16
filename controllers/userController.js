@@ -58,7 +58,7 @@ const controller = {
         const { username, password } = req.body;
         const user = await User.getUserByName(username);
         if (!user)
-            return res.status(401).json({ error: 'Invalid username or password.' + error.message });
+            return res.status(401).json({ error: 'Invalid username or password.' });
         const passwordMatches = await auth.verifyPassword(password, user.doc.password);
 
         if (!user.doc.isAdmin) { // if not admin authorize connected ip
