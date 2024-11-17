@@ -1,6 +1,6 @@
 require('dotenv').config();
 const Master = require('../models/masterModel');
-const { db, dbName, username, password } = require('../config/db'); // CouchDB instance
+const { db, dbName } = require('../config/db'); // CouchDB instance
 const axios = require('axios');
 
 const orderMasterID = 'order_report_selection_list';
@@ -138,7 +138,7 @@ const controller = {
             const attachments = doc._attachments;
 
             // Get the URLs of the attachments
-            const couchdb_url = process.env.COUCHDB_URL || 'http://localhost:5984';
+            const couchdb_url = `https://${process.env.COUCHDB_URL}` || 'http://localhost:5984';
             imgid = docId.replaceAll('/', '%2F');
             const images = Object.keys(attachments).map((key) => ({
                 name: key,
@@ -150,7 +150,7 @@ const controller = {
                         const response = await axios.get(image.url, {
                             responseType: 'arraybuffer',
                             headers: {
-                                'Authorization': 'Basic ' + Buffer.from(`${username}:${password}`).toString('base64'),
+                                'Authorization': 'Basic ' + Buffer.from(`${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}`).toString('base64'),
                             }
                         })
 
