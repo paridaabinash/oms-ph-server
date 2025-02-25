@@ -134,7 +134,7 @@ const controller = {
                         const response = await axios.get(image.url, {
                             responseType: 'arraybuffer',
                             headers: {
-                                'Authorization': 'Basic ' + Buffer.from(`${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}`).toString('base64'),
+                                'Authorization': 'Basic ' + Buffer.from(`${process.env.COUCHDB_USER}:${process.env.COUCHDB_HPASSWORD}`).toString('base64'),
                             }
                         })
 
