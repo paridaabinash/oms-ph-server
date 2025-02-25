@@ -12,7 +12,7 @@ const app = express();
 app.use(bodyParser.json({ limit: '10mb' })); 
 
 const corsOptions = {
-    origin: process.env.FRONTEND_URL, //http://oms-ph-client.netlify.app
+    origin: process.env.FRONTEND_URL, 
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true, // Enable cookies if needed
 }
