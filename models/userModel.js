@@ -2,6 +2,7 @@ const { db } = require('../config/db'); // CouchDB instance
 
 const designDoc = 'users'; // Design document
 const userListView = 'userList'; // View name
+const userCountView = 'userCount'; // View name
 const loginView = 'login'; // View name
 const User = {
     createUpdateUser: async (userData) => {
@@ -26,12 +27,12 @@ const User = {
         return response && response.rows ? response.rows[0] : null;
     },
     getMaximumUID: async () => {
-        const response = await db.view(designDoc, userListView, { descending: true, limit: 1 });
-        return response && response.rows ? response.rows[0].id : null;
+        const response = await db.view(designDoc, userCountView, {});
+        return response && response.rows ? response.rows[0].value : null;
     },
     getAllUsers: async () => {
         const response = await db.view(designDoc, userListView, { include_docs: true });
-        return response && response.rows ? response.rows : null;
+        return response && response.rows ? response.rows.slice(1) : null;
     },
 };
 

@@ -25,11 +25,19 @@ const Report = {
         return response ?? null;
     },
     getAllReports: async (view) => {
-        const response = await db.view(designDoc, view, { include_docs: true });
+        const response = await db.view(designDoc, view, { include_docs: true, descending: true });
         return response && response.rows ? response.rows : null;
     },
-    getAllFilterReports: async (view) => {
-        const response = await db.view(pendingReportDesignDoc, view, { include_docs: true });
+    getAllFilterReports: async(view, include_docs, start = null, end = null) => {
+        let queryOptions = { include_docs: include_docs, descending: true };
+
+        if (start && end) { // in case of descending true reverse start end keys
+            queryOptions.startkey = parseInt(end);
+            queryOptions.endkey = parseInt(start);
+        }
+
+        const response = await db.view(pendingReportDesignDoc, view, queryOptions);
+
         return response && response.rows ? response.rows : null;
     },
     getPendingQtyFiltered: async (view) => {

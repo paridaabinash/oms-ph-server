@@ -4,15 +4,15 @@ const designDoc = 'master'; // Design document
 
 const Master = {
     getAllLinkingMaster: async (view) => {
-        const response = await db.view(designDoc, view, { include_docs: true });
+        const response = await db.view(designDoc, view, { include_docs: true, descending: true });
         return response && response.rows ? response.rows : null;
     },
     getMasterById: async (id) => {
         const response = await db.get(id);
         return response ?? null;
     },
-    getLinkingMasterByIds: async (ids, view) => {
-        const response = await db.view(designDoc, view, { keys: ids, include_docs: true });
+    getLinkingMasterByIds: async (ids, view, include_doc = true) => {
+        const response = await db.view(designDoc, view, { keys: ids, include_docs: include_doc });
         return response && response.rows ? response.rows : null;
     },
     createUpdateLinkingMaster: async (data) => {

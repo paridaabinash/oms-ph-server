@@ -6,10 +6,6 @@ const axios = require('axios');
 const orderMasterID = 'order_report_selection_list';
 const BOM_ID = 'bom_master';
 
-const packageMasterView = 'packagingMaster'; // View name
-const compositionMasterView = 'compositionMaster'; // View name
-const rmMasterView = 'rmMaster'; // View name
-const pmStockMasterView = 'pmStockMaster'; // View name
 
 const controller = {
     getOrderMaster: async (req, res) => {
@@ -61,9 +57,11 @@ const controller = {
             else if (product.type.includes("packaging"))
                 product._id = product.packaging_code
             else if (product.type.includes("pm_stock"))
-                product._id = product.rm_stock_name.replace(/[^a-zA-Z0-9]/g, '_')
+                product._id = product.pm_item_name
             else if (product.type.includes("rm"))
-                product._id = product.rm_item_name.replace(/[^a-zA-Z0-9]/g, '_')
+                product._id = product.rm_item_name
+            else if (product.type.includes("brand_master"))
+                product._id = product.brand_name
             const response = await Master.createUpdateLinkingMaster(product);
             return res.status(201).json(response);
         } catch (error) {
@@ -100,16 +98,9 @@ const controller = {
     },
     getLinkingMasterByIds: async (req, res) => {
         try {
-            const { _ids, type } = req.query;
+            const { _ids, view, include_doc } = req.query;
             const idsArray = Array.isArray(_ids) ? _ids : [_ids];
-            let view = packageMasterView;
-            if (type.includes("composition"))
-                view = compositionMasterView
-            else if (type.includes("pm_stock"))
-                view = pmStockMasterView
-            else if (type.includes("rm"))
-                view = rmMasterView
-            const response = await Master.getLinkingMasterByIds(idsArray, view);
+            const response = await Master.getLinkingMasterByIds(idsArray, view, include_doc);
             return res.status(201).json(response);
         } catch (error) {
             res.status(500).json({ error: error.message });
@@ -117,14 +108,7 @@ const controller = {
     },
     getAllLinkingMaster: async (req, res) => {
         try {
-            const { type } = req.query;
-            let view = packageMasterView;
-            if (type.includes("composition"))
-                view = compositionMasterView
-            else if (type.includes("pm_stock"))
-                view = pmStockMasterView
-            else if (type.includes("rm"))
-                view = rmMasterView
+            const { view } = req.query;
             const response = await Master.getAllLinkingMaster(view);
             return res.status(201).json(response);
         } catch (error) {
@@ -138,7 +122,7 @@ const controller = {
             const attachments = doc._attachments;
 
             // Get the URLs of the attachments
-            const couchdb_url = `https://${process.env.COUCHDB_URL}` || 'http://localhost:5984';
+            const couchdb_url = /*`https://${process.env.COUCHDB_URL}` ||*/ 'http://localhost:5984';
             imgid = docId.replaceAll('/', '%2F');
             const images = Object.keys(attachments).map((key) => ({
                 name: key,

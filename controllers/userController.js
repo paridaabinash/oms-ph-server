@@ -8,7 +8,7 @@ const JWT_SECRET = 'your_jwt_secret';
 const initializeAdmin = async () => {
     const defaultAdmin = {
         type: "user",
-        _id: '1',
+        _id: 'u-1',
         username: 'admin',
         displayname: 'Administrator',
         password: await auth.hashPassword('admin123'),
@@ -28,7 +28,7 @@ const controller = {
         try {
             const userData = req.body;
             const maxid = await User.getMaximumUID();
-            userData._id = (parseInt(maxid) + 1).toString();
+            userData._id = "u-" + (maxid + 1);
             userData.password = await auth.hashPassword(userData.password);
             const response = await User.createUpdateUser(userData);
             res.status(201).json(response);

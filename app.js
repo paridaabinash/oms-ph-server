@@ -58,7 +58,7 @@ app.use('/api/master', masterRoutes);
 //    res.sendFile(path.join(__dirname, '../OMS-CLIENT/dist/oms-we/browser/index.html'));
 //});
 
-const PORT = process.env.PORT || 3000;
+const PORT = /*process.env.PORT ||*/ 3000;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
