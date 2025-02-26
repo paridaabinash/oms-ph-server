@@ -8,7 +8,8 @@ const Encrypt = {
     },
     verifyPassword: async function (plainPassword, hashedPassword) {
         if (!plainPassword || !hashedPassword) {
-            throw new Error("Missing password or hash in bcrypt.compare()");
+            console.error("Password or hash is missing!");
+            return false;
         }
         const match = await bcrypt.compare(plainPassword, hashedPassword);
         return match;
