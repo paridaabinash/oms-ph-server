@@ -28,12 +28,12 @@ app.options('*', cors(corsOptions));  // Respond to preflight OPTIONS requests
 
 
 // Force HTTPS middleware
-app.use((req, res, next) => {
-    if (req.headers["x-forwarded-proto"] !== "https") {
-        return res.redirect(301, "https://" + req.headers.host + req.url);
-    }
-    next();
-});
+//app.use((req, res, next) => {
+//    if (req.headers["x-forwarded-proto"] !== "https") {
+//        return res.redirect(301, "https://" + req.headers.host + req.url);
+//    }
+//    next();
+//});
 
 
 
