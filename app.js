@@ -5,7 +5,6 @@ const cors = require('cors');
 const userRoutes = require('./routes/user');
 const reportRoutes = require('./routes/report');
 const masterRoutes = require('./routes/master');
-const path = require('path');
 const jwt = require('jsonwebtoken');
 
 const app = express();
@@ -29,12 +28,12 @@ app.options('*', cors(corsOptions));  // Respond to preflight OPTIONS requests
 
 
 // **Force Redirect HTTPS to HTTP**
-app.use((req, res, next) => {
-    if (req.headers['x-forwarded-proto'] === 'https') {
-        return res.redirect(307, `http://${req.headers.host}${req.url}`);
-    }
-    next();
-});
+//app.use((req, res, next) => {
+//    if (req.headers['x-forwarded-proto'] === 'https') {
+//        return res.redirect(307, `http://${req.headers.host}${req.url}`);
+//    }
+//    next();
+//});
 
 
 const authenticateJWT = (req, res, next) => {

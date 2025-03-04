@@ -1,8 +1,8 @@
+require('dotenv').config();
 const User = require('../models/userModel');
 const auth = require('./authController')
 const checkIp = require('../middlewares/ipMiddleware')
 const jwt = require('jsonwebtoken');
-const JWT_SECRET = 'your_jwt_secret';
 
 // Create default admin user if not exists
 const initializeAdmin = async () => {
@@ -45,7 +45,7 @@ const controller = {
             res.status(500).json({ error: 'Failed to update user.' + error.message });
         }
     },
-   deleteUser: async (req, res) => {
+    deleteUser: async (req, res) => {
         try {
             const { _id, _rev } = req.body;
             const response = await User.deleteUser(_id, _rev);
@@ -66,9 +66,9 @@ const controller = {
         //    if (!checkIPifNotAdmin)
         //        return res.status(403).json({ message: 'Unauthorized: Access from this IP is not allowed' });
         //}
-
+        delete user.doc.password;
         if (passwordMatches) {
-            const token = jwt.sign({ username: user.username }, JWT_SECRET, { expiresIn: '1h' });
+            const token = jwt.sign({ username: user.username }, process.env.JWT_SECRET, { expiresIn: '1h' });
             return res.status(200).json({ user: user.doc, message: 'Login successful!', token });
         } else {
             return res.status(401).json({ error: 'Invalid username or password.' });

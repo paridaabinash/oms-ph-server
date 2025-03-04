@@ -24,6 +24,10 @@ const Report = {
         const response = await db.get(id);
         return response ?? null;
     },
+    getReportByIds: async (ids, view, include_doc = true) => {
+        const response = await db.view(designDoc, view, { keys: ids, include_docs: include_doc });
+        return response && response.rows ? response.rows : null;
+    },
     getAllReports: async (view) => {
         const response = await db.view(designDoc, view, { include_docs: true, descending: true });
         return response && response.rows ? response.rows : null;
@@ -31,7 +35,7 @@ const Report = {
     getAllFilterReports: async(view, include_docs, start = null, end = null) => {
         let queryOptions = { include_docs: include_docs, descending: true };
 
-        if (start && end) { // in case of descending true reverse start end keys
+        if (start != "undefined" && end != "undefined") { // in case of descending true reverse start end keys
             queryOptions.startkey = parseInt(end);
             queryOptions.endkey = parseInt(start);
         }
@@ -46,7 +50,7 @@ const Report = {
     },
     bulkAddDocuments: async (docs) => {
         const response = await db.bulk({ docs: docs });
-        return response && response.rows ? response.rows : null;
+        return response ? response : null;
     },
 }
 

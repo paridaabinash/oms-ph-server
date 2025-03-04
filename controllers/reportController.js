@@ -99,6 +99,16 @@ const controller = {
             res.status(500).json({ error: error.message });
         }
     },
+    getReportByIds: async (req, res) => {
+        try {
+            const { _ids, view, include_doc } = req.query;
+            const idsArray = Array.isArray(_ids) ? _ids : [_ids];
+            const response = await Report.getReportByIds(idsArray, view, include_doc);
+            return res.status(201).json(response);
+        } catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    },
     getAllReports: async (req, res) => {
         try {
             const { view } = req.query;

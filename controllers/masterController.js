@@ -122,7 +122,7 @@ const controller = {
             const attachments = doc._attachments;
 
             // Get the URLs of the attachments
-            const couchdb_url = /*`https://${process.env.COUCHDB_URL}` ||*/ 'http://localhost:5984';
+            const couchdb_url = `http://${process.env.COUCHDB_URL}`;
             imgid = docId.replaceAll('/', '%2F');
             const images = Object.keys(attachments).map((key) => ({
                 name: key,
@@ -134,7 +134,7 @@ const controller = {
                         const response = await axios.get(image.url, {
                             responseType: 'arraybuffer',
                             headers: {
-                                'Authorization': 'Basic ' + Buffer.from(`${process.env.COUCHDB_USER}:${process.env.COUCHDB_HPASSWORD}`).toString('base64'),
+                                'Authorization': 'Basic ' + Buffer.from(`${process.env.COUCHDB_USER}:${process.env.COUCHDB_PASSWORD}`).toString('base64'),
                             }
                         })
 
