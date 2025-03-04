@@ -27,13 +27,13 @@ app.options('*', cors(corsOptions));  // Respond to preflight OPTIONS requests
 //}));
 
 
-// **Force Redirect HTTPS to HTTP**
-//app.use((req, res, next) => {
-//    if (req.headers['x-forwarded-proto'] === 'https') {
-//        return res.redirect(307, `http://${req.headers.host}${req.url}`);
-//    }
-//    next();
-//});
+// Force HTTPS middleware
+app.use((req, res, next) => {
+    if (req.headers["x-forwarded-proto"] !== "https") {
+        return res.redirect(301, "https://" + req.headers.host + req.url);
+    }
+    next();
+});
 
 
 const authenticateJWT = (req, res, next) => {
