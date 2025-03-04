@@ -36,6 +36,7 @@ app.use((req, res, next) => {
 });
 
 
+
 const authenticateJWT = (req, res, next) => {
     const token = req.headers['authorization'] && req.headers['authorization'].split(' ')[1];
     if (!token) {
@@ -51,6 +52,9 @@ const authenticateJWT = (req, res, next) => {
     });
 };
 
+app.get("/", (req, res) => {
+    res.send("Hello from Express!");
+});
 
 app.use('/api/user', userRoutes);
 app.use('/api/report', reportRoutes);
