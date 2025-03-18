@@ -8,7 +8,7 @@ const masterRoutes = require('./routes/master');
 const jwt = require('jsonwebtoken');
 
 const app = express();
-app.use(bodyParser.json({ limit: '10mb' })); 
+app.use(bodyParser.json({ limit: '50mb' })); 
 
 const corsOptions = {
     origin: process.env.FRONTEND_URL, 
@@ -61,15 +61,6 @@ app.use('/api/report', reportRoutes);
 app.use('/api/master', masterRoutes);
 
 
-
-
-//// Serve static files from the Angular app
-//app.use(express.static(path.join(__dirname, '../OMS-CLIENT/dist/oms-we')));
-
-//// Catch-all route to serve the Angular index.html file for any request that doesn't match a server route
-//app.get('*', (req, res) => {
-//    res.sendFile(path.join(__dirname, '../OMS-CLIENT/dist/oms-we/browser/index.html'));
-//});
 
 const PORT = /*process.env.PORT ||*/ 3000;
 app.listen(PORT, () => {
