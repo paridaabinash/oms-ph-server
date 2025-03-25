@@ -52,9 +52,9 @@ const controller = {
                 repdata._id = "pm_" + Date.now();
             }
             else if (repdata.type == 'art_report') {
-                let maxid = await Report.getMaximumUID(artView);
+                let maxid = await Report.getMaximumArtID(artView);
                 if (maxid != 0)
-                    maxid = maxid.split('/').slice(-1)[0];
+                    maxid = maxid.split('/')[2];
                 repdata.artwork_code = "WEL/" + new Date().getUTCFullYear().toString().slice(-2) + "/" + (parseInt(maxid) + 1).toString();
                 repdata._id = repdata.artwork_code;
                 repdata.carton_artwork_code_inner = repdata.artwork_code + "/CI";

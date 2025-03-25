@@ -8,6 +8,10 @@ const Report = {
         const response = await db.view(designDoc, view, { descending: true, limit: 1 });
         return response && response.rows && response.rows.length > 0 ? response.rows[0].id : 0;
     },
+    getMaximumArtID: async (view) => {
+        const response = await db.view(designDoc, view, { descending: true, limit: 1 });
+        return response?.rows?.length > 0 ? response.rows[0].value : 0;
+    },
     createUpdateReport: async (data) => {
         const response = await db.insert(data);
         if (!response)

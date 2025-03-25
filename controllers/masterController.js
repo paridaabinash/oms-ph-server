@@ -70,9 +70,20 @@ const controller = {
     },
     updateLinkingMaster: async (req, res) => {
         try {
-            const product = req.body
-            //product.type = 'linking_master';
-            const response = await Master.createUpdateLinkingMaster(product);
+            const product = req.body;
+            let revised_id = "";
+            if (product.type.includes("composition") && product._id != product.composition_code)
+                revised_id = product.composition_code;
+            else if (product.type.includes("packaging") && product._id != product.packaging_code)
+                revised_id = product.packaging_code;
+            else if (product.type.includes("pm_stock") && product._id != product.pm_item_name)
+                revised_id = product.pm_item_name;
+            else if (product.type.includes("rm") && product._id != product.rm_item_name)
+                revised_id = product.rm_item_name;
+            else if (product.type.includes("brand_master") && product._id != product.brand_name)
+                revised_id = product.brand_name;
+
+            const response = await Master.createUpdateLinkingMaster(product, revised_id);
             return res.status(201).json(response);
         } catch (error) {
             res.status(500).json({ error: error.message });
