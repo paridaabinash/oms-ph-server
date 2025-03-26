@@ -54,8 +54,8 @@ const controller = {
             else if (repdata.type == 'art_report') {
                 let maxid = await Report.getMaximumArtID(artView);
                 if (maxid != 0)
-                    maxid = maxid.split('/')[2];
-                repdata.artwork_code = "WEL/" + new Date().getUTCFullYear().toString().slice(-2) + "/" + (parseInt(maxid) + 1).toString();
+                    maxid += 1;
+                repdata.artwork_code = "WEL/" + new Date().getUTCFullYear().toString().slice(-2) + "/" + maxid;
                 repdata._id = repdata.artwork_code;
                 repdata.carton_artwork_code_inner = repdata.artwork_code + "/CI";
                 repdata.carton_artwork_code_outer = repdata.artwork_code + "/CO";

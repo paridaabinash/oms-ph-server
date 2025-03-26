@@ -65,7 +65,7 @@ const controller = {
             const response = await Master.createUpdateLinkingMaster(product);
             return res.status(201).json(response);
         } catch (error) {
-            res.status(500).json({ error: error.message });
+            res.json({ error: error.message });
         }
     },
     updateLinkingMaster: async (req, res) => {
